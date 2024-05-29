@@ -1,18 +1,18 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	c "github.com/hainguyen27798/go-ecommerce-backend-api.git/internal/controllers"
+)
 
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 	v1 := r.Group("/api/v1")
 	{
-		v1.GET("/ping", Pong)
+		user := v1.Group("/users")
+		{
+			user.GET("", c.NewUserController().GetAllUsers)
+		}
 	}
 	return r
-}
-
-func Pong(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "pong",
-	})
 }
