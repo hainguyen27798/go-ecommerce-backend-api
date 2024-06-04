@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/hainguyen27798/go-ecommerce-backend-api.git/internal/services"
+	"github.com/hainguyen27798/go-ecommerce-backend-api.git/pkg/response"
 )
 
 type UserController struct {
@@ -16,8 +17,5 @@ func NewUserController() *UserController {
 }
 
 func (uc *UserController) GetAllUsers(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message":   "Success",
-		"usernames": uc.userService.GetUsers(),
-	})
+	response.SuccessResponse(c, response.ErrCodeSuccess, uc.userService.GetUsers())
 }
