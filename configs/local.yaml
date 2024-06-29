@@ -1,11 +1,11 @@
 server:
     port: 8000
-databases:
-    - user: admin
-      pass: admin
-      host: localhost
-      db_name: auth
-    - user: ecommerce
-      pass: ecommerce
-      host: localhost
-      db_name: ecommerce
+mysql:
+    user: root
+    pass: ecommerce@123
+    host: localhost
+    port: 33306
+    db_name: ecommerce
+    max_idle_conn: 10
+    max_open_conn: 100
+    conn_max_life_time: 3600

@@ -1,0 +1,22 @@
+name: go-ecommerce
+networks:
+    go_ecommerce_network:
+        driver: bridge
+services:
+    database:
+        container_name: database
+        image: mysql:8.0
+        restart: unless-stopped
+        environment:
+            - MYSQL_DATABASE=ecommerce
+            - MYSQL_ROOT_PASSWORD=ecommerce@123
+        ports:
+            - '33306:3306'
+        volumes:
+            - database:/var/lib/mysql
+            - ./.docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+        networks:
+            - go_ecommerce_network
+volumes:
+    database:
+        driver: local
