@@ -17,6 +17,18 @@ services:
             - ./.docker/init.sql:/docker-entrypoint-initdb.d/init.sql
         networks:
             - go_ecommerce_network
+    redis:
+        container_name: redis
+        image: redis:alpine
+        restart: unless-stopped
+        ports:
+            - '6380:6379'
+        volumes:
+            - redis_db:/data
+        command: redis-server --save 20 1 --loglevel warning --requirepass 123456
+        networks:
+            - go_ecommerce_network
 volumes:
     database:
         driver: local
+    redis_db:
