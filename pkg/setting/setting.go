@@ -8,7 +8,8 @@ type Config struct {
 }
 
 type ServerSettings struct {
-	Port int `mapstructure:"port"`
+	Port int    `mapstructure:"port"`
+	Mode string `mapstructure:"mode"`
 }
 
 type MysqlSettings struct {

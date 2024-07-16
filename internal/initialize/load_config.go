@@ -1,7 +1,6 @@
 package initialize
 
 import (
-	"fmt"
 	"github.com/hainguyen27798/go-ecommerce-backend-api.git/global"
 	"github.com/spf13/viper"
 )
@@ -19,5 +18,4 @@ func LoadConfig() {
 	if err := v.Unmarshal(&global.Config); err != nil {
 		panic(err)
 	}
-	fmt.Println(global.Config)
 }
