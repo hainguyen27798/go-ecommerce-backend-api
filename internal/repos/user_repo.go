@@ -1,11 +1,21 @@
 package repos
 
-type UserRepo struct{}
-
-func NewUserRepo() *UserRepo {
-	return &UserRepo{}
+type IUserRepo interface {
+	CheckUserByEmail(email string) bool
+	GetUsers() []string
 }
 
-func (ur *UserRepo) GetUsers() []string {
+type userRepo struct{}
+
+func (ur userRepo) GetUsers() []string {
 	return []string{"hai", "harry"}
+}
+
+func (ur userRepo) CheckUserByEmail(email string) bool {
+	//TODO implement me
+	panic("implement me")
+}
+
+func NewUserRepo() IUserRepo {
+	return &userRepo{}
 }
