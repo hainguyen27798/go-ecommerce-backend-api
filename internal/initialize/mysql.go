@@ -1,12 +1,12 @@
 package initialize
 
 import (
+	"database/sql"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/hainguyen27798/go-ecommerce-backend-api.git/global"
-	"github.com/hainguyen27798/go-ecommerce-backend-api.git/internal/models"
+	"github.com/pressly/goose/v3"
 	"go.uber.org/zap"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 	"time"
 )
 
@@ -30,7 +30,8 @@ func InitMysql() {
 		config.Port,
 		config.Database,
 	)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, _ := sql.Open("mysql", dsn)
+	err := db.Ping()
 	CheckErrorPanic(err, "Init mysql failed")
 	global.Logger.Info("Initializing mysql successfully")
 	global.Mdb = db
@@ -41,8 +42,7 @@ func InitMysql() {
 
 func setPool() {
 	config := global.Config.Mysql
-	sqlDB, err := global.Mdb.DB()
-	CheckErrorPanic(err, "Mysql error")
+	sqlDB := global.Mdb
 
 	sqlDB.SetConnMaxIdleTime(time.Duration(config.MaxIdleConn))
 	sqlDB.SetMaxOpenConns(config.MaxOpenConn)
@@ -50,11 +50,13 @@ func setPool() {
 }
 
 func migrateTables() {
-	err := global.Mdb.AutoMigrate(
-		&models.User{},
-		&models.Role{},
-	)
-	if err != nil {
-		global.Logger.Error(err.Error())
+	db := global.Mdb
+
+	if err := goose.SetDialect("mysql"); err != nil {
+		CheckErrorPanic(err, "Init mysql failed")
+	}
+
+	if err := goose.Up(db, "migrations"); err != nil {
+		CheckErrorPanic(err, "Init mysql failed")
 	}
 }
