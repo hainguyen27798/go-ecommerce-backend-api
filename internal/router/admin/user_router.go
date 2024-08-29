@@ -16,7 +16,5 @@ func (userRouter *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 	userRouterPrivate.Use(middlewares.AuthMiddleware())
 	{
 		userRouterPrivate.GET("", userController.GetAllUsers)
-		userRouterPrivate.GET(":id")
-		userRouterPrivate.DELETE(":id")
 	}
 }

@@ -47,6 +47,18 @@ services:
             - KAFKA_KRAFT_MODE=true
         networks:
             - go_ecommerce_network
+    backend:
+        container_name: go_backend
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            MODE: prod
+        restart: unless-stopped
+        ports:
+            - '8000:8000'
+        networks:
+            - go_ecommerce_network
 volumes:
     database:
         driver: local
