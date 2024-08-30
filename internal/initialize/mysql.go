@@ -56,7 +56,7 @@ func migrateTables() {
 		CheckErrorPanic(err, "Init mysql failed")
 	}
 
-	if err := goose.Up(db, "migrations"); err != nil {
+	if err := goose.Up(db, "database/migrations"); err != nil {
 		CheckErrorPanic(err, "Init mysql failed")
 	}
 }

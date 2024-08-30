@@ -5,11 +5,19 @@ type Config struct {
 	Mysql  MysqlSettings  `mapstructure:"mysql"`
 	Logger LoggerSettings `mapstructure:"log"`
 	Redis  RedisSettings  `mapstructure:"redis"`
+	SMTP   SMTPSettings   `mapstructure:"smtp"`
 }
 
 type ServerSettings struct {
 	Port int    `mapstructure:"port"`
 	Mode string `mapstructure:"mode"`
+}
+
+type SMTPSettings struct {
+	Host     string `mapstructure:"host"`
+	Port     int    `mapstructure:"port"`
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
 }
 
 type MysqlSettings struct {

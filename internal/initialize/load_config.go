@@ -7,11 +7,7 @@ import (
 )
 
 func LoadConfig() {
-	name := "local"
-
-	if os.Getenv("MODE") == "prod" {
-		name = "production"
-	}
+	name := os.Getenv("MODE")
 
 	v := viper.New()
 	v.AddConfigPath("./configs/")

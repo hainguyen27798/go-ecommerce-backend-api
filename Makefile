@@ -2,7 +2,10 @@
 APP_NAME = server
 
 run:
-	go run ./cmd/${APP_NAME}/
+	MODE=dev go run ./cmd/${APP_NAME}/
 
 build:
 	go build -o backend ./cmd/${APP_NAME}
+
+wire:
+	cd internal/wires && wire

@@ -1,5 +1,12 @@
 package repos
 
+import (
+	"database/sql"
+	"errors"
+	"github.com/hainguyen27798/go-ecommerce-backend-api.git/global"
+	"github.com/hainguyen27798/go-ecommerce-backend-api.git/internal/db"
+)
+
 type IUserRepo interface {
 	CheckUserByEmail(email string) bool
 	GetUsers() []string
@@ -7,15 +14,17 @@ type IUserRepo interface {
 
 type userRepo struct{}
 
+func NewUserRepo() IUserRepo {
+	return &userRepo{}
+}
+
 func (ur userRepo) GetUsers() []string {
 	return []string{"hai", "harry"}
 }
 
 func (ur userRepo) CheckUserByEmail(email string) bool {
-	//TODO implement me
-	panic("implement me")
-}
+	q := db.New(global.Mdb)
+	_, err := q.GetUserByEmail(ctx, email)
 
-func NewUserRepo() IUserRepo {
-	return &userRepo{}
+	return !errors.Is(err, sql.ErrNoRows)
 }

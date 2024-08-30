@@ -10,7 +10,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.GetHeader("Authorization")
 		if !strings.HasPrefix(token, "Bearer ") {
-			response.ErrorResponse(c, response.ErrInvalidToken)
+			response.ErrorResponse(c, response.ErrInvalidToken, nil)
 			c.Abort()
 			return
 		}
